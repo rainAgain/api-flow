@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <style>
+	    ul,li {
+	    	list-style: none;
+	    }
+    	.folder-list {
+    		width: 300px;
+    		top: 20px;
+    	}
+    	.folder-operate {
+    		position: absolute;
+    		right: 0;
+    		top: 0;
+    		z-index: 10;
+    		background-color: inherit;
+    		height: 100%;
+    	}
+    	.folder-item,
+    	.api-items {
+    		position: relative;
+    		padding-right: 30px;
+    	}
+		
+		.menu-contain {
+			position: relative;
+			width: 300px;
+			height: 100%;
+		}
+    	.content-menu {
+			position: absolute;
+			right: -20px;
+			top: 20px;
+			z-index: 20;
+	
+			display: none;
+			width: 135px;
+			padding: 5px 0;
+
+			background-color: #fafafa;
+			
+			color: #666;
+			box-shadow: 0 0 4px 0 rgba(102,102,102,.5);
+			border-radius: 3px;
+			overflow: hidden;
+    	}
+		.content-menu li {
+			padding: 5px 10px;
+		}
+    	.content-menu li:hover {
+			background-color: #ededed;
+			cursor: pointer;
+    	}
+    </style>
+</head>
+<body>
+	<div class="menu-contain">
+		<div class="folder-list" id="folder-list">
+	        <ul>
+	            <li>
+	                <div class="parent-folder folder-item folder-box">
+	                    <div class="folder-icon"><i class="fa fa-folder-o fz-28 color-green" aria-hidden="true"></i></div>
+
+	                    <div class="folder-info pd-t-10 pd-b-10 text-ellipsis">
+	                        <p class="fz-14 text-ellipsis">ParentProjectName1</p>
+	                        <p class="fz-12 text-ellipsis">20 api</p>
+	                    </div>
+
+	                    <div class="folder-operate">
+	                        <div></div>
+	                        <div><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+	                    </div>
+	                </div>
+	                <ul class="">
+	                    <li>
+	                        <div style="padding-left: 10px;" class="child-folder folder-item folder-box">
+
+	                            <div class="folder-icon"><i class="fa fa-folder-o fz-16 color-green" aria-hidden="true"></i></div>
+
+	                            <div class="folder-info pd-t-10 pd-b-10 text-ellipsis">
+	                                <p class="text-ellipsis">childProjectName1-1</p>
+	                            </div>
+
+	                            <div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+	                        </div>
+	                        <ul class="">
+	                            <li>
+	                                <div style="padding-left: 20px;" class="child-folder folder-item folder-box">
+
+	                                    <div class="folder-icon"><i class="fa fa-folder-o fz-16 color-green" aria-hidden="true"></i></div>
+
+	                                    <div class="folder-info pd-t-10 pd-b-10 text-ellipsis">
+	                                        <p class="text-ellipsis">childProjectName 1-1-1</p>
+	                                    </div>
+
+	                                    <div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+	                                </div>
+	                                <ul>
+	                                    <li class="">
+	                                    	<div class="api-items folder-box"  style="padding-left: 30px;">
+	                                    		<span class="font-bold api-type color-success">GET</span>
+		                                        <span class="api-name text-ellipsis">child接口 1-1-1-1</span>
+		                                        <div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+	                                    	</div>
+	                                    </li>
+	                                    <li class="api-items folder-box">
+	                                    	<div class="api-items folder-box"  style="padding-left: 30px;">
+	                                    		<span class="font-bold api-type color-success">GET</span>
+		                                        <span class="api-name text-ellipsis">child接口 1-1-1-2</span>
+		                                        <div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+	                                    	</div>
+	                                    </li>
+	                                </ul>
+	                            </li>
+	                            <li class="">
+                                	<div class="api-items folder-box"  style="padding-left: 20px;">
+                                		<span class="font-bold api-type color-success">GET</span>
+                                        <span class="api-name text-ellipsis">child接口名称 1-1-2</span>
+                                        <div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+                                	</div>
+                                </li>
+	                           <li class="">
+                                	<div class="api-items folder-box"  style="padding-left: 20px;">
+                                		<span class="font-bold api-type color-success">GET</span>
+                                        <span class="api-name text-ellipsis">child接口名称 1-1-3</span>
+                                        <div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+                                	</div>
+                                </li>
+                                <li class="">
+                                	<div class="api-items folder-box"  style="padding-left: 20px;">
+                                		<span class="font-bold api-type color-success">GET</span>
+                                        <span class="api-name text-ellipsis">child接口名称 1-1-4</span>
+                                        <div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+                                	</div>
+                                </li>
+                                <li class="">
+                                	<div class="api-items folder-box"  style="padding-left: 20px;">
+                                		<span class="font-bold api-type color-success">GET</span>
+                                        <span class="api-name text-ellipsis">child接口名称 1-1-5</span>
+                                        <div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+                                	</div>
+                                </li>
+	                        </ul>
+	                    </li>
+	                     <li>
+	                        <div style="padding-left: 10px;" class="child-folder folder-item folder-box">
+
+	                            <div class="folder-icon"><i class="fa fa-folder-o fz-16 color-green" aria-hidden="true"></i></div>
+
+	                            <div class="folder-info pd-t-10 pd-b-10 text-ellipsis">
+	                                <p class="text-ellipsis">childProjectName1-1</p>
+	                            </div>
+
+	                            <div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+	                        </div>
+	                        <ul>
+	                        	<li class="">
+		                        	<div class="api-items folder-box"  style="padding-left: 20px;">
+		                        		<span class="font-bold api-type color-success">GET</span>
+		                                <span class="api-name text-ellipsis">child接口名称 1-2</span>
+		                                <div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+		                        	</div>
+		                        </li>
+	                        </ul>
+	                    </li>
+	                    <li class="">
+                        	<div class="api-items folder-box"  style="padding-left: 10px;">
+                        		<span class="font-bold api-type color-success">GET</span>
+                                <span class="api-name text-ellipsis">child接口名称 1-2</span>
+                                <div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+                        	</div>
+                        </li>
+                        <li class="">
+                        	<div class="api-items folder-box"  style="padding-left: 10px;">
+                        		<span class="font-bold api-type color-success">GET</span>
+                                <span class="api-name text-ellipsis">child接口名称 1-3</span>
+                                <div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+                        	</div>
+                        </li>
+	                </ul>
+	            </li>
+	            <!-- <li>
+	                <div class="parent-folder folder-item folder-box">
+	                    flex布局
+	                    <div class="folder-icon">
+	                        <i class="fa fa-folder-o fz-28 color-green" aria-hidden="true"></i>
+	                    </div>
+	                    <div class="folder-info pd-t-10 pd-b-10 text-ellipsis">
+	                        <p class="fz-14 text-ellipsis">ParentProjectNameParentProjectNameParentProjectName</p>
+	                        <p class="fz-12 text-ellipsis">20 api20 api20 api20 api20 api20 api20 api</p>
+	                    </div>
+	                    <div class="folder-operate">
+	                        <div></div>
+	                        <div><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+	                    </div>
+	                </div>
+	                <ul>
+	                    <li>
+	                        <div class="child-folder folder-item folder-box active">
+	                            flex布局
+	                            <div class="folder-icon"><i class="fa fa-folder-o fz-16 color-green" aria-hidden="true"></i></div>
+	                            <div class="folder-info pd-t-10 pd-b-10 text-ellipsis">
+	                                <p class="text-ellipsis">childProjectNamechildProjectNamechildProjectName</p>
+	                            </div>
+	                            <div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+	                        </div>
+	                        <ul>
+	                            <li class="api-items folder-box">
+	                                <span class="font-bold api-type color-orange">POST</span>
+	                                <span class="api-name text-ellipsis">接口名称</span>
+	                                <div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+	                            </li>
+	                            <li class="api-items folder-box">
+	                                <span class="font-bold api-type color-success">GET</span>
+	                                <span class="api-name text-ellipsis">接口名称接口名称接口名称</span>
+	                                <div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>
+	                            </li>
+	                        </ul>
+	                    </li>
+	                </ul>
+	            </li> -->
+	        </ul>
+	        
+	    </div>
+	    <div class="content-menu" id="content-menu">
+	    	<ul>
+	    		<li class="menu-item" data-role="rename">重命名</li>
+	    		<li class="menu-item" data-role="editor">编辑</li>
+	    		<li class="menu-item" data-role="add">添加文件夹</li>
+	    		<li class="menu-item" data-role="copy">复制</li>
+	    		<li class="menu-item" data-role="export">导出</li>
+	    		<li class="menu-item" data-role="delete">删除</li>
+	    	</ul>
+	    </div>
+	</div>
+	
+    <script src="./js/lib/jquery.js"></script>
+    <script src="./js/lib/mustache.min.js"></script>
+    <script src="./js/index/temp.js"></script>
+    <script>
+    	var parent_folder_tpl = '<div style="padding-left: {{distance}}px;" class="parent-folder folder-item folder-box">'+
+	                    '<div class="folder-icon"><i class="fa fa-folder-o fz-28 color-green" aria-hidden="true"></i></div>'+
+	                    '<div class="folder-info pd-t-10 pd-b-10 text-ellipsis">'+
+	                        '<p class="fz-14 text-ellipsis">{{name}}</p>'+
+	                        '<p class="fz-12 text-ellipsis">20 api</p>'+
+	                    '</div>'+
+	                    '<div class="folder-operate">'+
+	                        '<div></div>'+
+	                        '<div><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>'+
+	                    '</div>'+
+	                '</div>';
+
+    	var folder_tpl ='<div style="padding-left: {{distance}}px;" class="child-folder folder-item folder-box">'+
+	                            '<div class="folder-icon"><i class="fa fa-folder-o fz-16 color-green" aria-hidden="true"></i></div>'+
+	                            '<div class="folder-info pd-t-10 pd-b-10 text-ellipsis">'+
+	                                '<p class="text-ellipsis">{{name}}</p>'+
+	                            '</div>'+
+	                            '<div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>'+
+	                        '</div>';
+
+        var api_tpl = '<div class="api-items folder-box"  style="padding-left: {{distance}}px;">'+
+                        		'<span class="font-bold api-type color-success">GET</span>'+
+                                '<span class="api-name text-ellipsis">{{name}}</span>'+
+                                '<div class="folder-operate"><i class="fa fa-ellipsis-h color-grey" aria-hidden="true"></i></div>'+
+                        	'</div>';
+
+        var renderView = function(dataArr,left) {
+			left = left ? left : 0;
+
+			var str = '';
+
+			left += 20;	//缩进的距离 单位为px
+			
+			// console.log(dataArr);
+
+			dataArr.forEach(function(el, index) {
+				var sumStr = '',
+					spanStr = '';
+
+				var itemStr = '';
+				el.distance = left;
+
+				// console.log(el.item)
+				if(el.item) {
+					sumStr += '<ul >'+ renderView(el.item, left) +'</ul>';
+				}
+
+				if( el.item) {
+					if(el.info ) {
+						el.info.distance = left;
+						itemStr = Mustache.render(parent_folder_tpl, el.info);
+					} else {
+						console.log(el)
+						itemStr = Mustache.render(folder_tpl, el);
+					}
+				} else  {
+					itemStr = Mustache.render(api_tpl, el);
+				}
+				
+				
+				str += '<li>' + itemStr + sumStr + '</li>';
+				console.log(str);
+			});
+
+			return str;
+		};
+
+        sumStr = renderView(tempData.collection)
+
+        $('#folder-list ul').html(sumStr);
+
+
+        // var renderStr = '';
+        // var count = 0;
+
+        // var renderLeft = function(arr, step, str) {
+        // 	var parentStr = '';
+        // 	if(str) {
+        // 		parentStr = str;
+        // 	}
+        	
+
+        // 	for(var i = 0, len = arr.length; i < len; i++) {
+        // 		var el = arr[i];
+
+
+        // 		//最外层父文件夹
+        // 		if(el.info && el.info._postman_id) {
+        // 			count++;
+
+        // 			el.info.distance = (count)*10;
+        // 			el.info.sum = 20;
+        // 			parentStr += '<li>' + Mustache.render(parent_folder_tpl, el.info) + '<ul><li>';
+
+        // 		} else if(el.description) {
+        // 			//文件夹
+        // 			el.distance = (count)*10;
+        // 			parentStr += Mustache.render(folder_tpl, el) + '<ul><li>';
+        // 		} else if(el.request && el.name) {
+        // 			//接口api
+        // 			el.distance = (count)*10;
+        // 			parentStr += Mustache.render(api_tpl, el);
+        // 		}
+
+        		
+
+        // 		//子文件夹
+        // 		/*if(el._postman_isSubFolder) {
+        // 			el.distance = (count)*10;
+        // 			renderStr += Mustache.render(folder_tpl, el) + '<ul><li>';
+        // 		}*/
+        		
+        // 		if(el.item && el.item.length) {
+
+        // 			console.log(el.item);
+        // 			count++;
+        // 			// if(renderLeft) {
+		      //   	// 	renderStr += '</li>';
+		      //   	// }
+        // 			renderLeft(el.item, count,parentStr);
+
+        // 			// parentStr += ;
+        // 		} else {
+
+        // 			renderStr += parentStr + '</li></ul></li>'
+        // 			count = 0;
+        // 			return false;
+        // 		}
+        // 	}
+
+
+        	
+        	
+        // };
+
+       // renderLeft(tempData.collection);
+
+       // $('#folder-list ul').html(renderStr);
+
+       const $contentMenu = $('#content-menu');
+
+
+       $('#folder-list').on('click','.folder-operate',function(e) {
+       		const $this = $(this);
+
+       		$contentMenu.attr('code', $this.data('name'));
+       		if($this.attr('flag') == 'true') {
+       			$this.attr('flag',false);
+       			$contentMenu.hide();
+       		} else {
+       			$contentMenu.css('top',e.clientY- 204).show();
+       			$('.folder-operate').attr('flag',false);
+       			$this.attr('flag',true);
+       		}
+       		
+       });
+
+       $contentMenu.on('click', '.menu-item', function() {
+       		const $this = $(this),
+       			_role =  $this.data('role'),
+       			_id = $this.parent().parent().attr('code');
+
+
+       		console.log(_role,_id);
+
+       });
+    </script>
+</body>
+</html>

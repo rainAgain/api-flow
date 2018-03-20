@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="./css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/bulma.css">
+    <link rel="stylesheet" href="./css/home.css">
+</head>
+
+<body>
+    <section class="home">
+        <div class="columns">
+            <!-- 左侧菜单 -->
+            <div class="column is-one-quarter">
+                <nav class="panel">
+                    <p class="panel-heading">
+                        <i class="fa fa-train" aria-hidden="true"></i>
+                    </p>
+                    <div class="panel-block">
+                        <p class="control has-icons-left is-1">
+                            <input class="input is-small" type="text" placeholder="Filter">
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </p>
+                        <!-- <a class="button is-success is-small">Login</a> -->
+                    </div>
+                    <!-- <p class="panel-tabs">
+                        <a class="is-active">all</a>
+                        <a>public</a>
+                        <a>private</a>
+                        <a>sources</a>
+                        <a>forks</a>
+                    </p> -->
+                    <a class="panel-block is-active">
+                        <span class="panel-icon">
+                            <i class="fa fa-folder-o"></i>
+                        </span> bulma
+                    </a>
+                    <a class="panel-block">
+                        <span class="panel-icon">
+                            <i class="fa fa-folder-o"></i>
+                        </span> marksheet
+                    </a>
+                    <a class="panel-block">
+                        <span class="panel-icon">
+                            <i class="fa fa-folder-o"></i>
+                        </span> minireset.css
+                    </a>
+                    <a class="panel-block">
+                        <span class="panel-icon">
+                            <i class="fa fa-folder-o"></i>
+                        </span> jgthms.github.io
+                    </a>
+                </nav>
+            </div>
+            <!-- 右侧主区域 -->
+            <div class="column">
+                <div class="container">
+                    <!-- tabs 组件 -->
+                    <div class="tabs is-marginless is-boxed">
+                        <ul>
+                            <li class="is-active">
+                                <a>
+                                    <span>Pictures</span>
+                                    <span class="icon is-small"><i class="fa fa-times"></i></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <span>Music</span>
+                                    <!-- <span class="icon is-small"><i class="fa fa-times"></i></span> -->
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <span>Videos</span>
+                                    <!-- <span class="icon is-small"><i class="fa fa-times"></i></span> -->
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <span>Documents</span>
+                                    <!-- <span class="icon is-small"><i class="fa fa-times"></i></span> -->
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- 发送请求 -->
+                    <section class="section is-paddingless">
+                        <div class="container">
+                        <div class="field has-addons has-addons-centered is-pulled-left">
+                            <p class="control">
+                                <span class="select">
+                                    <select>
+                                        <option>POST</option>
+                                        <option>GET</option>
+                                    </select>
+                                </span>
+                            </p>
+                            <p class="control">
+                                <input class="input" type="text" placeholder="Amount of money">
+                            </p>
+                            <p class="control">
+                                <a class="button is-primary">
+                                    <i class="fa fa-paper-plane" aria-hidden="true"></i> Send
+                                </a>
+                            </p>
+                        </div>
+                        <div class="tabs">
+                            <ul>
+                                <li class="is-active">
+                                    <a>Pictures</a>
+                                </li>
+                                <li>
+                                    <a>Music</a>
+                                </li>
+                                <li>
+                                    <a>Videos</a>
+                                </li>
+                                <li>
+                                    <a>Documents</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    </section>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+    // You can also require other files to run in this process
+    // require('./js/index/index.js')
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+{
+  "name": "api-flow",
+  "version": "1.0.0",
+  "description": "api-flow",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder ./",
+    "publish": "build --win -p always"
+  },
+  "build": {
+    "appId": "com.github.rainagain.apiFLow",
+    "productName": "apiFLow",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "./icon/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "menuCategory": true,
+      "installerIcon": "./icon/icon.ico",
+      "uninstallerIcon": "./icon/icon.ico"
+    },
+    "asar": true,
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "rainagain",
+        "repo": "apiFLow"
+      }
+    ]
+  },
+  "repository": "https://github.com/rainAgain/apiFLow",
+  "keywords": [
+    "Electron"
+  ],
+  "author": "jjj",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "~1.7.8",
+    "electron-auto-updater": "^1.0.0",
+    "electron-builder": "^19.45.5",
+    "mustache": "^2.3.0"
+  },
+  "dependencies": {
+    "electron-log": "^2.2.11",
+    "electron-updater": "^2.16.1"
+  }
+}

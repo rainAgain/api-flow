@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ApiFlow</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/lib/codemirror/codemirror.css">
+    <link rel="stylesheet" href="./css/lib/codemirror/foldgutter.css">
+    <link rel="stylesheet" href="./css/lib/codemirror/theme/neat.css">
+    <link rel="stylesheet" href="./css/lib/codemirror/addon/lint/lint.css">
+    <link rel="stylesheet" href="./css/lib/codemirror/simplescrollbars.css">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body style="-webkit-app-region: drag">
+    <div class="home clearfix">
+        <!-- 左侧目录 -->
+        <section class="folder-contain l" id="folder-contain">
+            <!-- 左侧顶部 -->
+            <header class="header" id="header">
+                <div class="text-center pd-t-10 pd-b-10 logo">ApiFlow</div>
+                <div class="clearfix pd-l-10 pd-r-10 pd-b-10 full-width">
+                    <div class="filter l">
+                        <input class="filter-input pd-l-10" type="text" placeholder="Filter" />
+                    </div>
+                    
+                </div>
+                <div class="header-btns pd-l-10 pd-r-10 clearfix full-width">
+                    <div class="download-files pointer l" title="导出">
+                        <!-- <i class="fa fa-cloud-download color-yellow mg-l-10 fz-28 pointer" aria-hidden="true"></i> -->
+                        导出
+                    </div>
+                    <div class="add-folder pointer r" title="创建新项目">
+                        创建项目
+                        <!-- <i class="fa fa-plus color-yellow r fz-28 pointer" aria-hidden="true"></i> -->
+                    </div>
+                </div>
+            </header>
+            <!-- 左侧菜单 -->
+            <!-- <div class="folder-list"> -->
+                <div class="folder-content">
+                    <div class="folder-list" id="folder-list">
+                        <ul>
+                        </ul>
+                    </div>
+                    <div class="content-menu" id="content-menu">
+                        <ul>
+                            <li class="menu-item folder-item" data-role="rename">重命名(待做)</li>
+                            <!-- <li class="menu-item" data-role="editor">编辑</li> -->
+                            <li class="menu-item folder-item" data-role="add">添加文件夹</li>
+                            <!-- <li class="menu-item" data-role="copy">复制(待做)</li> -->
+                            <li class="menu-item parent-folder-item" data-role="export">导出</li>
+                            <li class="menu-item" data-role="delete">删除</li>
+                        </ul>
+                    </div>
+                </div>
+            <!-- </div> -->
+        </section>
+        <!-- 右侧内容 -->
+        <section class="operate-contain pd-t-10 l" id="operate-contain">
+            <!-- tab和tab名 -->
+            <div class="tabs full-width clearfix border-b-1">
+                <ul class="l tabs-ul" id="tabs-ul">
+                    <li class="l tab text-ellipsis pd-l-10 mg-l-10 pointer active">
+                        <span>接口名称</span>
+                        <div class="tab-close">×</div>
+                    </li>
+                    <!-- <li class="l tab text-ellipsis pd-l-10 mg-l-10 pointer ">接口2</li> -->
+                    <!-- <li class="l tab text-ellipsis pd-l-10 mg-l-10 pointer">接口3</li> -->
+                </ul>
+                <div class="create-tab l">
+                    <i class="fa fa-plus-square color-yellow fz-28 mg-l-10 pointer add-api" aria-hidden="true"></i>
+                </div>
+            </div>
+            <!-- 接口名称 -->
+            <div class="api-info pd-t-10 pd-b-10 pd-l-10">
+                <div class="api-info-detail mg-b-10">
+                    <input class="api-info-input api-info-text" type="text" placeholder="接口名称">
+                </div>
+                <div class="api-info-detail">
+                    <input class="api-info-desc api-info-text" type="text" placeholder="接口描述">
+                </div>
+            </div>
+            <!-- 请求的交互 -->
+            <div class="handle-contain pd-l-10 pd-t-10 clearfix bg-color-grey" id="handle-contain">
+                <div class="selects l">
+                    <div class="selected">
+                        <span id="selected-text" data-type="GET">GET</span>
+                        <i id="selected-icon" class="fa fa-angle-down fz-16 font-bold" aria-hidden="true"></i>
+                    </div>
+                    <ul class="select-list" id="select-list">
+                        <li class="select-item">GET</li>
+                        <li class="select-item">POST</li>
+                    </ul>
+                </div>
+                <div class="l request-box bg-color-grey">
+                    <input type="text" class="request-input" value="http://localhost:9012/post" placeholder="Enter requestUrl">
+                </div>
+                <div class="btns-box">
+                    <div class="send-btn btns l mg-l-10">请求</div>
+                    <div class="l save-btn btns mg-l-10">保存</div>
+                </div>
+            </div>
+            <!-- 请求参数的信息 -->
+            <div class="params-contain" id="params-contain">
+                <!-- 请求切换的tab -->
+                <div class="border-b-1 bg-color-grey">
+                    <ul class="clearfix">
+                        <li class="param-type enable fz-12 l pointer pd-t-10 pd-b-5 pd-l-10 pd-r-10" data-type="authorization">Authorization</li>
+                        <li class="param-type param-type-headers enable fz-12 l pointer pd-t-10 pd-b-5 pd-l-10 pd-r-10 active" data-type="headers">Headers</li>
+                        <li class="param-type param-type-body fz-12 l pointer pd-t-10 pd-b-5 pd-l-10 pd-r-10" data-type="body">Body</li>
+                    </ul>
+                </div>
+                <!-- 请求切换的内容 -->
+                <div class="border-b-1 params-lists">
+                    <ul>
+                        <!-- authorization 用户验证 -->
+                        <li class="params-item params-authorization" id="params-authorization">
+                            <div class="authorization-type clearfix">
+                                <div class="auth-type l">Type</div>
+                                <div class="auth-type-list l">
+                                    <div class="auth-type-select">
+                                        <div class="auth-select-result" data-value="0">No Auth</div>
+                                        <ul class="auth-select-list">
+                                            <li class="auth-select-item" data-value="0">No Auth</li>
+                                            <li class="auth-select-item" data-value="1">Basic Auth</li>
+                                            <li class="auth-select-item" data-value="2">Digest Auth</li>
+                                            <li class="auth-select-item" data-value="3">OAuth 1.0</li>
+                                            <li class="auth-select-item" data-value="4">OAuth 2.0</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- header 字段 -->
+                        <li class="params-item params-headers active" id="params-headers">
+                            <div class="key-list">
+                                <ul class="key-list-ul">
+                                    <li class="key-list-li clearfix full-width">
+                                        <div class="l key-item">
+                                            <input class="param-input param-key" placeholder="New key" type="text">
+                                        </div>
+                                        <div class="l key-item">
+                                            <input class="param-input param-value" placeholder="value" type="text">
+                                        </div>
+                                        <div class="l key-item">
+                                            <input class="param-input param-description" placeholder="Description" type="text">
+                                        </div>
+                                        <div class="key-item-close">×</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <!-- body 内容 -->
+                        <li class="params-item  params-body" id="params-body">
+
+                            <!-- body内容分类 -->
+                            <div class="pd-b-10 pd-t-10 pd-l-10 pd-r-10 fz-12">
+                                <ul class="clearfix">
+                                    <li class="l mg-r-10">
+                                        <label class="pointer param-body-type" for="application-json">
+                                            <input name="param-body-type" value="application-json" type="radio" checked class="mg-r-5 vertical-middle" id="application-json" type="text" />JSON(application/json)</label>
+                                    </li>
+                                    <li class="l mg-r-10">
+                                        <label class="pointer param-body-type" for="form-data">
+                                            <input name="param-body-type" value="form-data" type="radio" class="mg-r-5 vertical-middle" id="form-data" type="text" />form-data</label>
+                                    </li>
+                                    <li class="l">
+                                        <label class="pointer param-body-type" for="x-www-form-urlencoded">
+                                            <input name="param-body-type" value="x-www-form-urlencoded" type="radio" class="mg-r-5 vertical-middle" id="x-www-form-urlencoded" type="text" />x-www-form-urlencoded</label>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- body具体内容 -->
+                            <div class="body-content">
+                                <!-- json -->
+                                <div class="pd-b-10 pd-t-10 pd-l-10 pd-r-10 request-body body-application-json">
+                                    <textarea name="" class="params-body-textarea" id="paramsbody" cols="30" rows="10"></textarea>
+                                </div>
+
+                                <!-- form-data -->
+                                <div class="pd-b-10 pd-t-10 request-body body-form-data">
+                                    <div class="key-list">
+                                        <ul class="key-list-ul">
+                                            <li class="key-list-li clearfix full-width">
+                                                <div class="l key-item">
+                                                    <input class="param-input param-key" placeholder="New key" type="text">
+                                                </div>
+                                                <div class="l key-item">
+                                                    <input class="param-input param-value" placeholder="value" type="text">
+                                                </div>
+                                                <div class="l key-item">
+                                                    <input class="param-input param-description" placeholder="Description" type="text">
+                                                </div>
+                                                <div class="key-item-close">×</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- x-www-form-urlencoded -->
+                                <div class="pd-b-10 pd-t-10 request-body body-x-www-form-urlencoded">
+                                    <div class="key-list">
+                                        <ul class="key-list-ul">
+                                            <li class="key-list-li clearfix full-width">
+                                                <div class="l key-item">
+                                                    <input class="param-input param-key" placeholder="New key" type="text">
+                                                </div>
+                                                <div class="l key-item">
+                                                    <input class="param-input param-value" placeholder="value" type="text">
+                                                </div>
+                                                <div class="l key-item">
+                                                    <input class="param-input param-description" placeholder="Description" type="text">
+                                                </div>
+                                                <div class="key-item-close">×</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 返回结果的信息 -->
+            <div class="body-contain" id="body-contain">
+                <!-- 返回结果切换的tab -->
+                <div class="body-tabs border-b-1 bg-color-grey">
+                    <ul class="clearfix">
+                        <li data-type="body" class="l body-type pointer fz-12 pd-t-10 pd-b-5 pd-l-10 pd-r-10 active body-type-body">body</li>
+                        <li  data-type="cookies" class="l body-type pointer fz-12 pd-t-10 pd-b-5 pd-l-10 pd-r-10">cookies</li>
+                        <li data-type="header" class="l body-type pointer fz-12 pd-t-10 pd-b-5 pd-l-10 pd-r-10 body-type-header">Header</li>
+                    </ul>
+                </div>
+                <!-- 返回结果 -->
+                <div>
+                    <!-- JSON格式 -->
+                    <ul>
+                        <li class="res-body res-item active">
+                            <!-- 返回结果状态信息 -->
+                            <div class="function-btns full-width clearfix pd-t-10 pd-b-10 border-b-1">
+                                <span class="l pd-l-10 pd-r-10 mg-r-10">Status:</span>
+                                <span class="l pd-l-10 pd-r-10 mg-r-10 res-status"></span>
+                                <span class="l pd-l-10 pd-r-10 mg-r-10">Time:</span>
+                                <span class="l pd-l-10 pd-r-10 mg-r-10 res-time"></span>
+                                <!-- 多功能 -->
+                                <span class="r pd-l-10 pd-r-10 mg-r-10" title="clear"><i class="fa fa-trash-o icon-clear btn-icons" data-type="clear" aria-hidden="true"></i></span>
+                                <span class="r pd-l-10 pd-r-10" title="copy"><i class="fa fa-files-o icon-copy btn-icons" data-type="copy" aria-hidden="true"></i></span>
+                                <span class="r pd-l-10 pd-r-10 mg-r-10" title="ASCII编码汉字互转"><i class="fa fa-exchange icon-exchange btn-icons" data-type="exchange" aria-hidden="true"></i></span>
+                            </div>
+                            <!-- 返回结果的数据 -->
+                            <div class="pd-b-10 pd-t-10 pd-l-10 pd-r-10 result-code">
+                                <textarea name="" id="test" cols="30" rows="10"></textarea>
+                            </div>
+                        </li>
+                        <li class="res-cookies res-item">
+                            <div >
+                                no-cookies
+                            </div>
+                        </li>
+                        <li class="res-headers res-item">
+                            <div>
+                                <ul class="res-header-ul">
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- 提示框 -->
+    <div class="alert-box" id="alert-box">
+        <div class="bg-cover"></div>
+        <div class="layers layer-alert">
+            <p class="layer-alert-content">这个是提示啊！</p>
+        </div>
+    </div>
+    <!-- 创建项目 -->
+    <div class="alert-box" id="create-box">
+        <div class="bg-cover"></div>
+        <div class="layers layer-create">
+            <div class="pd-b-5">
+                <p class="pd-b-5" id="project-name">项目名称</p>
+                <input class="create-name" id="create-name" type="text" placeholder="项目名称" />
+            </div>
+            <div class="pd-b-5">
+                <p class="pd-b-5 pd-t-10">描述</p>
+                <textarea class="create-desc" id="create-desc" name="" id="" cols="30" rows="5"></textarea>
+            </div>
+            <div class="clearfix full-width">
+                <span class="color-red l" id="create-warning"></span>
+                <div class="btns r btn-confirm">创建</div>
+                <div class="btns r mg-r-10 btn-cancle">取消</div>
+            </div>
+        </div>
+    </div>
+    <!--  <h1>Send a Request</h1>
+  <input type="text" id="url" value="https://www.baidu.com/" />
+  <div id="send">send</div>
+
+  <p id="response" class="response"></p>
+
+  <div id="autoupdate"> 自动更新-最新版</div>
+  <div id="messages"></div> -->
+  <script src="./js/lib/codemirror/addon/lint/jsonlint.js"></script>
+    <script>
+        
+        require('./js/lib/jquery.js');
+        // require('./js/index/temp.js');
+        // console.log(tempData);
+    </script>
+    <script>
+        //本地存储
+        require('./js/index/storage.js')
+        let apiStorage = new ApiStorage();
+    
+        require('./js/index/index.js')
+    </script>
+
+</body>
+
+</html>

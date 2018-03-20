@@ -1,0 +1,28 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Compiled binary addons
+build
+
+README.html
+
+# Dependency directory
+node_modules
+dist
+
+# github template
+.github
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+.idea
+
+
+
+.DS_Store
