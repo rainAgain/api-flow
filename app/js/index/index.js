@@ -7,6 +7,7 @@
 /*-------- javascript文件 -----*/
 //jQuery
 
+
 require('../lib/jquery.nicescroll.min.js');
 //CodeMirror
 const CodeMirror = require('../lib/codemirror/codemirror.js');
@@ -48,6 +49,8 @@ const HEADER_LIST_TPL = '{{#list}}<li class="clearfix full-width key-list-li"><d
 
 const TAB_TPL = '{{#list}}<li class="l tab text-ellipsis pd-l-10 mg-l-10 pointer {{#active}}active{{/active}}" site={{site}} psite={{psite}} ><span>{{name}}</span><div class="tab-close">×</div></li>{{/list}}'
 
+const TAB_MORE_TPL = '{{#list}}<li class="tab more-tab-item text-ellipsis" site={{site}} psite={{psite}}>{{name}}</li>{{/list}}';
+
 const $operateContain = $('#operate-contain'), //右侧主内容
     //请求类型Type
     $handleContain = $('#handle-contain', $operateContain),
@@ -60,6 +63,7 @@ const $operateContain = $('#operate-contain'), //右侧主内容
     $requestInput = $('.request-input', $handleContain),
     //接口tab
     $tabs = $('.tabs', $operateContain),
+    $tabUlBox = $('.tabs-ul-box', $tabs),
     $tabsUl = $('#tabs-ul'),
     $apiInfoInput = $('.api-info-input', $operateContain),
     $apiInfoDesc = $('.api-info-desc', $operateContain),
@@ -305,7 +309,7 @@ const renderTab = () => {
 
         bodyEditor.setValue('{}');
     }
-    const sumWidth = tabData.length * 150;
+    const sumWidth = tabData.length * 160;
     //console.log(boxW);
    /* $('.tabs').css('width',boxW - 35 +'px');
     $('.create-tab').css({
@@ -314,7 +318,38 @@ const renderTab = () => {
         "right": 0
     })*/
     //.css('width',sumWidth+'px')
-    $tabsUl.html(Mustache.render(TAB_TPL,{list: tabData}));
+    
+    $tabsUl.html(Mustache.render(TAB_TPL,{list: tabData})).css('width',sumWidth+'px');
+    
+    $('.tab-more-list').html(Mustache.render(TAB_MORE_TPL, {list: tabData}));
+    
+    $('.tab-more-list').niceScroll({ cursorwidth: "5px", cursorcolor: "#ccc" });
+
+    $tabUlBox.css('max-width', parseInt($operateContain.width()) - 48 ).niceScroll({ cursorwidth: "0px", cursorcolor: "#ccc" });
+};
+
+window.onresize = function() {
+    $tabUlBox.css('max-width', parseInt($operateContain.width()) - 48 );
+}
+
+const adjustTab = function() {
+    const _$tab = $('.tab.active', $tabs);
+    // $tabsUl.css('left', - (_$tab.index()+1)*160 + (parseInt($operateContain.width()) - 50) +'px')
+    // console.log(_$tab.index());
+    const leftDistance = 160 * (_$tab.index() + 1);//总移动的距离
+    const tabBoxWidth = $tabUlBox.width();//可视区域的宽度
+
+    let moveDistabce = -leftDistance + tabBoxWidth;//最后移动的距离
+
+    if(moveDistabce > 0) {
+        moveDistabce = 0;
+    }
+    $tabsUl.animate({'left': moveDistabce+'px'});
+
+    
+    // $tabUlBox.scrollLeft(-moveDistabce);
+    // $tabUlBox.getNiceScroll().resize();
+
 };
 
 //切换 tab 渲染右侧区域
@@ -337,7 +372,7 @@ const renderRightArea = (info,type) => {
         // $('.tab.active', $tabs).attr('site', site).html(name);
         
 
-        changeBodyList(method);
+        changeBodyList(method)
 
         if(method == 'POST') {
             if(body.mode == 'raw') {
@@ -387,10 +422,16 @@ const initRightEvent = () => {
  */
     $tabs.on('click', '.tab', function() {
         var $this = $(this),
-            site = $this.attr('site');
+            site = $this.attr('site'),
+            index = $this.index();
 
-        $this.addClass('active').siblings().removeClass('active');
+        //var site = this.site;
+        console.log("site");
+        console.log(site);
+        $('[site="'+site+'"]').addClass('active').siblings().removeClass('active');
 
+        // $this.addClass('active').siblings().removeClass('active');
+        adjustTab();
         const resData = apiStorage.readItem(site);
 
         renderRightArea(resData);
@@ -398,6 +439,13 @@ const initRightEvent = () => {
         $('.api-item').removeClass('on');
         $('#'+site).addClass('on');
 
+        if($this.hasClass('more-tab-item')) {
+            $('.tab-more-list').hide();
+        }
+
+     }).on('click', '.tab-more', function() {
+        $('.tab-more-list').toggle();
+        
      }).on('click', '.add-api', function() {
         
         apiStorage.addTab();
@@ -415,7 +463,9 @@ const initRightEvent = () => {
 
                 }
             }
-        }
+        };
+
+        adjustTab();
 
         renderRightArea(resData);
      }).on('click', '.tab-close', function() {

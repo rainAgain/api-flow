@@ -52,7 +52,15 @@ $header.on('click', '.add-folder', function() {
 		})
 	  	console.log(`选择的路径: ${path}`);
 	})
-	//writeFile();
+});
+
+ipc.on('load', function(event, message) {
+	console.log(message);
+	jsonfile.readFile(message, function(err,obj) {
+
+		console.log(obj);
+		apiStorage.mergeApi(obj);
+	});
 });
 
 let hideCreateBox = function() {
@@ -238,7 +246,9 @@ $('#folder-list').on('click','.folder-operate',function(e) {
 			$('.folder-item', $contentMenu).show();
 
 		}
-		$contentMenu.css('top',e.clientY- 184).show();
+		const topSite = $this.offset().top + $this.height();
+		// console.log(topSite);
+		$contentMenu.css('top',topSite).show();
 		$('.folder-operate').attr('flag',false);
 		$this.attr('flag',true);
 	}

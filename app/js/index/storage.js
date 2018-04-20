@@ -65,6 +65,39 @@
 		return this._db.collection;
 	};
 
+	Storage.prototype.mergeApi = function(arr) {
+/*		const oldArr = this._db.collection;
+		let idCache = [];
+		oldArr.forEach(function(item,index) {
+			idCache.push(item.info._apiflow_id);
+		});
+		var num = 1;
+		//如果已经存在，则提示，已经存在或者标题修改加(2)
+		arr.forEach(function(item, index) {
+			const idIndex = idCache.indexOf(item.info._apiflow_id);
+
+			if( idIndex > -1) {
+				console.log(oldArr[idIndex].info.name);
+				if(item.info.name == oldArr[idIndex].info.name) {
+					console.log(oldArr[idIndex].info.name.split('(').length);
+
+					if(oldArr[idIndex].info.name.split('(').length > 1) {
+						if(oldArr[idIndex].info.name.split('(')[1].split(')').length > 1) {
+							console.log('num');
+							console.log(parseInt(oldArr[idIndex].info.name.split('(')[1].split(')')[0]));
+							num = parseInt(oldArr[idIndex].info.name.split('(')[1].split(')')[0]) + 1;
+						}
+					}
+					item.info.name = item.info.name + '('+ num +')'
+				}
+			}
+		});*/
+		//如果不存在，则直接push
+		this._db.collection = this._db.collection.concat(arr);
+		//console.log()
+		this.syncLocalStorage('save');
+	};
+
 	/**
 	 * [addFolder 新增文件夹]
 	 * @param {[type]} opt [description]

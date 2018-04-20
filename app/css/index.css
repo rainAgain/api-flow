@@ -345,7 +345,7 @@ html,body {
 
 .content-menu {
 	position: fixed;
-	left: 130px;
+	left: calc(30% - 140px);
 	top: 20px;
 	z-index: 20;
 
@@ -418,6 +418,55 @@ html,body {
 
 }
 
+.tabs-ul {
+	position: relative;
+}
+
+.tabs-ul-box {
+	/*max-width: calc(70% - 40px);*/
+	/*overflow-x: auto;*/
+}
+
+.tab-more {
+	position: absolute;
+	right: -2px;
+	top: 16px;
+	z-index: 10;
+
+	width: 16px;
+	height: 16px;
+	background-image: url('../images/arrow.png');
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	background-position: center;
+
+
+}
+
+.tab-more-list {
+	position: absolute;
+	right: 3px;
+	top: 40px;
+	background-color: #fff;
+	display: none;
+	height: 180px;
+	overflow-y: auto;
+	border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+}
+
+.more-tab-item {
+	padding: 3px 10px;
+	line-height: 20px;
+	width: 130px;
+	border-radius: 0;
+
+}
+
+.more-tab-item:hover {
+	background-color: #e7a300;
+	cursor: pointer;
+	color: #fff;
+}
 .create-tab {
 
 }

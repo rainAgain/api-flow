@@ -38,6 +38,7 @@
 			cursor: pointer;
 		}
 		.close {
+			-webkit-app-region: no-drag;
 			position: absolute;
 			right: 0;
 			top: 0;
@@ -48,11 +49,15 @@
 			background-color: #ee5e44;
 			color: #fff;
 		}
+		.close:hover {
+			opacity: .85;
+			cursor: default;
+		}
 	</style>
 </head>
 <body style="-webkit-app-region: drag">
 	<h2 class="h2-title">建议反馈</h2>
-	<!-- <div class="close" id="close">&times;</div> -->
+	<div class="close" id="close">&times;</div>
 	<textarea class="input-text" id="input-text" placeholder="请输入内容" name="" id="" cols="30" rows="8"></textarea>
 	<div class="send" id="send">发送</div>
 	<script src="js/feedback/feedback.js"></script>

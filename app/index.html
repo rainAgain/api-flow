@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="./css/index.css">
 </head>
 
-<body style="-webkit-app-region: drag">
+<body>
     <div class="home clearfix">
         <!-- 左侧目录 -->
         <section class="folder-contain l" id="folder-contain">
@@ -62,17 +62,27 @@
         <section class="operate-contain pd-t-10 l" id="operate-contain">
             <!-- tab和tab名 -->
             <div class="tabs full-width clearfix border-b-1">
-                <ul class="l tabs-ul" id="tabs-ul">
-                    <li class="l tab text-ellipsis pd-l-10 mg-l-10 pointer active">
-                        <span>接口名称</span>
-                        <div class="tab-close">×</div>
-                    </li>
-                    <!-- <li class="l tab text-ellipsis pd-l-10 mg-l-10 pointer ">接口2</li> -->
-                    <!-- <li class="l tab text-ellipsis pd-l-10 mg-l-10 pointer">接口3</li> -->
-                </ul>
+                <div class="l tabs-ul-box">
+                   <ul class="l tabs-ul" id="tabs-ul">
+                        <li class="l tab text-ellipsis pd-l-10 mg-l-10 pointer active">
+                            <span>接口名称</span>
+                            <div class="tab-close">×</div>
+                        </li>
+                        <!-- <li class="l tab text-ellipsis pd-l-10 mg-l-10 pointer ">接口2</li> -->
+                        <!-- <li class="l tab text-ellipsis pd-l-10 mg-l-10 pointer">接口3</li> -->
+                    </ul> 
+                </div>
+                
                 <div class="create-tab l">
                     <i class="fa fa-plus-square color-yellow fz-28 mg-l-10 pointer add-api" aria-hidden="true"></i>
                 </div>
+                <div class="tab-more"></div>
+                <div class="tab-more-list">
+                    <ul>
+                        <li>接口名称</li>
+                    </ul>
+                </div>
+
             </div>
             <!-- 接口名称 -->
             <div class="api-info pd-t-10 pd-b-10 pd-l-10">
@@ -309,6 +319,7 @@
 
   <div id="autoupdate"> 自动更新-最新版</div>
   <div id="messages"></div> -->
+ <!--  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script> -->
   <script src="./js/lib/codemirror/addon/lint/jsonlint.js"></script>
     <script>
         
@@ -323,7 +334,7 @@
     
         require('./js/index/index.js')
     </script>
-
+    <!-- <script>if (window.module) module = window.module;</script> -->
 </body>
 
 </html>

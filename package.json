@@ -1,53 +1,57 @@
 {
   "name": "api-flow",
-  "version": "1.0.0",
-  "description": "api-flow",
+  "version": "1.0.3",
+  "description": "测试版本1.0.3",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder ./",
-    "publish": "build --win -p always"
+    "build": "electron-builder -mw",
+    "publish": "build --win --mac -p always",
+    "build:dmg": "electron-builder --mac",
+    "wm": "build -wm -p always"
   },
   "build": {
-    "appId": "com.github.rainagain.apiFLow",
-    "productName": "apiFLow",
+    "appId": "com.github.rainagain.api-flow",
+    "productName": "apiflow",
+    "mac": {
+      "target": ["dmg"]
+    },
     "win": {
       "target": [
         "nsis"
       ],
-      "icon": "./icon/icon.ico"
+      "icon": "./icon/app.ico"
     },
     "nsis": {
       "oneClick": false,
       "allowElevation": true,
       "allowToChangeInstallationDirectory": true,
       "menuCategory": true,
-      "installerIcon": "./icon/icon.ico",
-      "uninstallerIcon": "./icon/icon.ico"
+      "installerIcon": "./icon/app.ico",
+      "uninstallerIcon": "./icon/app.ico"
     },
     "asar": true,
     "publish": [
       {
         "provider": "github",
         "owner": "rainagain",
-        "repo": "apiFLow"
+        "repo": "api-flow"
       }
     ]
   },
-  "repository": "https://github.com/rainAgain/apiFLow",
+  "repository": "https://github.com/rainAgain/api-flow",
   "keywords": [
     "Electron"
   ],
-  "author": "jjj",
+  "author": "前端研发部",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "~1.7.8",
+    "electron": "^1.8.2",
     "electron-auto-updater": "^1.0.0",
-    "electron-builder": "^19.45.5",
-    "mustache": "^2.3.0"
+    "electron-builder": "^20.2.0"
   },
   "dependencies": {
     "electron-log": "^2.2.11",
-    "electron-updater": "^2.16.1"
+    "electron-updater": "^2.21.0"
   }
 }
