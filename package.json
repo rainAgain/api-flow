@@ -14,7 +14,9 @@
     "appId": "com.github.rainagain.api-flow",
     "productName": "apiflow",
     "mac": {
-      "target": ["dmg"]
+      "target": [
+        "dmg"
+      ]
     },
     "win": {
       "target": [
