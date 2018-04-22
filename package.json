@@ -4,7 +4,7 @@
   "description": "测试版本1.0.3",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "NODE_ENV=ELE electron .",
     "build": "electron-builder -mw",
     "publish": "build --win --mac -p always",
     "build:dmg": "electron-builder --mac",

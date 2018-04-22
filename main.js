@@ -37,7 +37,7 @@ function createWindow() {
     minWidth: 1000,
     show: false
   })
-
+  
   mainWindow.once('ready-to-show', () => {
       mainWindow.show()
   })
@@ -85,7 +85,10 @@ ipc.on('save-dialog', function(event) {
     }]
   }
   dialog.showSaveDialog(options, function(filename) {
-    event.sender.send('saved-file', filename)
+    if(filename) {
+      event.sender.send('saved-file', filename)
+    }
+    
   })
 })
 

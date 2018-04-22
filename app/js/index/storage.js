@@ -17,7 +17,7 @@
 		//接口数据存储
 		this._db = null;	//内存中的文库缓存
 		this.syncLocalStorage('read');
-
+		
 		//tab数据存储
 		this._tab = null;
 		this.syncTabStorage('read');
@@ -26,7 +26,7 @@
 	//同步本地存储中的内容
 	Storage.prototype.syncLocalStorage = function(type) {
 		if(type == 'read') {
-			const defaultStr = '{"collection":[]}';
+			const defaultStr = '{"collection":[{"variables":[],"info": {"name": "Example","_apiflow_id": 1,"description": "Descript for Examle","schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"},"item": []}]}';
 			this._db = JSON.parse(win.localStorage[LOCAL_STORAGE_NAME] || defaultStr);
 
 		} else if( type == "save") {
@@ -60,6 +60,46 @@
 		}
 		
 	};
+
+	//修改文件夹名称和描述
+	Storage.prototype.editFolder = function(opt) {
+		if(!! opt && typeof opt == 'object') {
+			const site = opt.site,
+				newName = opt.name,
+				newDesc = opt.description;
+			
+			const isProject = site.indexOf('-') > -1 ? false : true;
+
+			if(isProject) {
+
+				this._db.collection[site].info.name = newName;
+				this._db.collection[site].name = newName;
+				this._db.collection[site].info.description = newDesc;
+				this._db.collection[site].description = newDesc;
+			} else {
+				
+				const lastsplit = site.lastIndexOf('-');
+
+				const siteStr = site.substring(0,lastsplit);
+				const lastsite = site.substr(lastsplit+1,1);
+				
+				var _arr = this.getApiSite(siteStr);
+
+				_arr[lastsite].name = newName;
+				_arr[lastsite].description = newDesc;
+
+
+				
+			}
+
+			this.syncLocalStorage('save');
+			//var _arr = this.getApiSite(site);
+
+			// console.log(_arr);
+
+		}
+	};
+
 
 	Storage.prototype.readAll = function(opt) {
 		return this._db.collection;
@@ -223,6 +263,8 @@
 
 
 	//获取文件夹或者api的父级数组
+	//说明：
+	//如果要获取site自身所在数组，那就截去最后一段然后进行取值 参照 removeItem 方法中的使用
 	Storage.prototype.getApiSite = function(site) {
 		const _arr = site.toString().split('-'),
 			len = _arr.length;
@@ -250,7 +292,6 @@
 
 		return newArr;
 	};
-
 
 	//读取接口信息
 	Storage.prototype.readItem = function(site){
@@ -409,14 +450,23 @@
 	//新增的site和psite为add
 	Storage.prototype.addTab = function() {
 		let len =  this._tab.length,
-			addNum = 0;
+			addArr = [],
+			addNum = '';
 
 		for(let i = 0; i < len; i++ ) {
 			this._tab[i].active = false;
 			if(this._tab[i].site.indexOf('add') > -1) {
-				addNum ++;
+				addArr.push(this._tab[i].site);
 			}
 		}
+		if(addArr.length) {
+			const _num = addArr[addArr.length-1].split('add')[1];
+			addNum = +_num + 1;
+		}
+
+		
+
+		
 
 		this._tab.push({
 			active: true,

@@ -7,7 +7,6 @@
 /*-------- javascript文件 -----*/
 //jQuery
 
-
 require('../lib/jquery.nicescroll.min.js');
 //CodeMirror
 const CodeMirror = require('../lib/codemirror/codemirror.js');
@@ -325,30 +324,52 @@ const renderTab = () => {
     
     $('.tab-more-list').niceScroll({ cursorwidth: "5px", cursorcolor: "#ccc" });
 
-    $tabUlBox.css('max-width', parseInt($operateContain.width()) - 48 ).niceScroll({ cursorwidth: "0px", cursorcolor: "#ccc" });
+    $tabUlBox.css('max-width', parseInt($operateContain.width()) - 48 );
 };
+
+$tabUlBox.niceScroll({ cursorwidth: "0", autohidemode:'hidden', cursorcolor: "#ddd" });
 
 window.onresize = function() {
     $tabUlBox.css('max-width', parseInt($operateContain.width()) - 48 );
 }
 
-const adjustTab = function() {
+let tabTImer;
+const adjustTab = function(type) {
+    if(tabTImer) clearTimeout(tabTImer);
+    
     const _$tab = $('.tab.active', $tabs);
     // $tabsUl.css('left', - (_$tab.index()+1)*160 + (parseInt($operateContain.width()) - 50) +'px')
     // console.log(_$tab.index());
-    const leftDistance = 160 * (_$tab.index() + 1);//总移动的距离
+    const leftDistance = 160 * (_$tab.index()+1);//总移动的距离
+    console.log(leftDistance);
     const tabBoxWidth = $tabUlBox.width();//可视区域的宽度
 
-    let moveDistabce = -leftDistance + tabBoxWidth;//最后移动的距离
+    let moveDistabce = leftDistance - tabBoxWidth;//最后移动的距离
+    
 
-    if(moveDistabce > 0) {
+    if(moveDistabce < 0) {
         moveDistabce = 0;
     }
-    $tabsUl.animate({'left': moveDistabce+'px'});
-
+    // $tabsUl.animate({'left': moveDistabce+'px'});
+    //改为nicescroll的移动
+    console.log('111')
+    console.log(moveDistabce);
     
-    // $tabUlBox.scrollLeft(-moveDistabce);
-    // $tabUlBox.getNiceScroll().resize();
+    console.log($('.tabs-ul-box').getNiceScroll(0));
+
+    if(type == 'add-api') {
+        
+        
+        //不想加定时器，不知道为什么，在执行add-api的方法后，这个滚动条不执行
+        //所以这里单独给add-api的执行时添加定时器
+        tabTImer = setTimeout(function() {
+            $tabUlBox.getNiceScroll(0).doScrollLeft(moveDistabce, 200);
+        },250);
+    } else {
+        $tabUlBox.getNiceScroll(0).doScrollLeft(moveDistabce, 200);        
+    }
+    
+    
 
 };
 
@@ -358,6 +379,7 @@ const adjustTab = function() {
 const renderRightArea = (info,type) => {
     if(type == 'menu') {
         renderTab();
+        adjustTab();
     }
     
     if(typeof info == 'object') {
@@ -398,7 +420,9 @@ const renderRightArea = (info,type) => {
         $('.body-type-body').trigger('click');
         editor.markClean();
         editor.setValue('');
-
+        $resStatus.removeClass('color-error').text('');
+        $resTime.removeClass('color-error').text('');
+        
         $('.res-cookies>div').html('no-cookies');
         $bodyTypeHeader.html('Headers')
         $('.res-header-ul').html('no-headers');
@@ -465,9 +489,9 @@ const initRightEvent = () => {
             }
         };
 
-        adjustTab();
-
         renderRightArea(resData);
+        adjustTab('add-api');
+        
      }).on('click', '.tab-close', function() {
         const $this = $(this);
 

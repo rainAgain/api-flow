@@ -3,9 +3,9 @@
  * index.js -apiStorage
  * 
  */
-const parent_folder_tpl = '<div style="padding-left: {{distance}}px;" data-site="{{site}}" class="parent-folder folder-item"><div class="leaf-item folder-box"><div class="folder-icon"><i class="fa fa-folder-o fz-28 color-green" aria-hidden="true"></i></div><div class="folder-info pd-t-10 pd-b-10 text-ellipsis"><p class="fz-14 text-ellipsis">{{name}}</p><p class="fz-12 text-ellipsis">20 api</p></div></div><div class="folder-operate"><div></div><div></div></div></div>';
+const parent_folder_tpl = '<div style="padding-left: {{distance}}px;" data-site="{{site}}" class="parent-folder folder-item"><div class="leaf-item folder-box"><div class="folder-icon"><i class="fa fa-folder-o fz-28 color-green" aria-hidden="true"></i></div><div class="folder-info pd-t-10 pd-b-10 text-ellipsis"><p class="fz-14 js-name text-ellipsis" data-description="{{description}}">{{name}}</p><p class="fz-12 js-description text-ellipsis">{{description}}</p></div></div><div class="folder-operate"><div></div><div></div></div></div>';
 
-const folder_tpl ='<div style="padding-left: {{distance}}px;" data-site="{{site}}" class="child-folder folder-item"><div class="leaf-item folder-box"><div class="folder-icon"><i class="fa fa-folder-o fz-16 color-green" aria-hidden="true"></i></div><div class="folder-info pd-t-10 pd-b-10 text-ellipsis"><p class="text-ellipsis">{{name}}</p></div></div><div class="folder-operate"></div></div>';
+const folder_tpl ='<div style="padding-left: {{distance}}px;" data-site="{{site}}" class="child-folder folder-item"><div class="leaf-item folder-box"><div class="folder-icon"><i class="fa fa-folder-o fz-16 color-green" aria-hidden="true"></i></div><div class="folder-info pd-t-10 pd-b-10 text-ellipsis"><p class="text-ellipsis js-name" title="{{description}}" data-description="{{description}}">{{name}}</p></div></div><div class="folder-operate"></div></div>';
 
 const api_tpl = '<div class="api-items" data-site="{{site}}"  style="padding-left: {{distance}}px;"><div class="folder-box api-item" id="{{site}}"><span class="font-bold api-type color-orange {{#isGet}}color-success{{/isGet}}">{{request.method}}</span><span class="api-name text-ellipsis">{{name}}</span></div><div class="folder-operate"></div></div>';
 
@@ -76,28 +76,48 @@ $createBox.on('click', '.btn-confirm', function() {
 		  description = $createDesc.val(),
 		  type = $createBox.data('type');
 
+	//const site = $folderContain.attr('site')||'';
+	const site = $contentMenu.data('site');
+	
+	console.log(site);
+
 	if(!name) {
-		let tipName = '请输入项目名称';
-		if(type == 'folder') {
+		let tipName;
+		if(type == 'folder' || type == 'renameFolder') {
 			tipName = '请输入文件夹名称';
+		} else if(type == 'project' || type == 'renameProject') {
+			tipName = '请输入项目名称';
 		}
 
-		$createWarning.text('请输入项目名称');
+		$createWarning.text(tipName);
 		return false;
 	}
 
 	if(type == 'folder') {
-		const site = $folderContain.attr('site');
+		
 		//添加文件夹
 		apiStorage.addFolder({
 			name: name,
 			description: description,
 			site: site
 		});
-	} else {
+	} else if(type == 'project') {
 		//添加项目
 		//本地存储项目目录
 		apiStorage.addProject({
+			name: name,
+			description: description
+		});
+	} else if (type == 'renameProject') {
+		//重命名项目和文件夹调用同一个方法，里面根据site来判断，这边分两个是为区分上面的提示文本 tipName
+		apiStorage.editFolder({
+			site: site,
+			name: name,
+			description: description
+		});
+	} else if(type == 'renameFolder') {
+		apiStorage.editFolder({
+			site: site,
 			name: name,
 			description: description
 		});
@@ -126,8 +146,8 @@ const initLeftEvent = () => {
         const $this = $(this);
         //缓存site
         $folderContain.attr('site', $this.parent().data('site'));
-        $('.leaf-item', $folderList).removeClass('on');
-        $this.addClass('on');
+        $('.folder-item', $folderList).removeClass('on');
+        $this.parent().addClass('on');
 
         $this.parent().next().toggle();
     }).on('click', '.api-item', function() {
@@ -141,15 +161,12 @@ const initLeftEvent = () => {
 
     	renderRightArea(resData,'menu');
 
-    	$('.api-item').removeClass('on');
-        $('#'+site).addClass('on');
+    	$('.api-items').removeClass('on');
+        $('#'+site).parent().addClass('on');
 
     });
 };
 initLeftEvent();
-
-
-
 
 //渲染左侧菜单树
 const renderLeftMenu = (renderData) => {
@@ -225,28 +242,45 @@ $('#folder-list').on('click','.folder-operate',function(e) {
 
 	//右键菜单上缓存site信息
 	const _site = $this.parent().data('site') + '';
-	const hasExit = _site.indexOf('_') > -1 ? true: false;
-
-	$contentMenu.data('site', _site);
+	const hasExit = _site.indexOf('_') > -1 ? true : false; 	//是否是接口
+	const isProject = _site.indexOf('-') > -1 ? false : true;	//是否是项目文件夹
+	const _name = $this.prev().find('.js-name').text();
+	const _description = $this.prev().find('.js-name').data('description');
+	
+	$contentMenu.data({
+		'site': _site,
+		'name': _name,
+		'description': _description
+	});
 
 
 	if($this.attr('flag') == 'true') {
 		$this.attr('flag',false);
 		$contentMenu.hide();
 	} else {
-		if(_site.length == 1) {
+		//顶级目录显示导出按钮
+		//其他目录不显示
+		if(isProject) {
 			$('.parent-folder-item', $contentMenu).show();
 		} else {
 			$('.parent-folder-item', $contentMenu).hide();
 		}
 
+		//文件显示重命名和添加文件加
+		//文件不显示
 		if(hasExit) {
 			$('.folder-item', $contentMenu).hide();
 		} else {
 			$('.folder-item', $contentMenu).show();
 
 		}
-		const topSite = $this.offset().top + $this.height();
+
+		let topSite = $this.offset().top + $this.height();
+		const sumHeight = $folderContain.height();
+
+		if(topSite + $contentMenu.outerHeight() > sumHeight) {
+			topSite = sumHeight - $contentMenu.outerHeight();
+		}
 		// console.log(topSite);
 		$contentMenu.css('top',topSite).show();
 		$('.folder-operate').attr('flag',false);
@@ -279,8 +313,29 @@ $contentMenu.on('click', '.menu-item', function() {
 			// $folderContain.attr('site');
 			const _site = $contentMenu.data('site');
 
-			console.log(_site);
 			apiStorage.removeItem(_site);
+		} else if(_role == 'rename') {
+			const _site = $contentMenu.data('site'),
+				_name = $contentMenu.data('name'),
+				_description = $contentMenu.data('description');
+
+			const isProject = _site.indexOf('-') > -1 ? false : true;
+			
+			$createName.val(_name);
+			$createDesc.val(_description);
+
+			if(isProject) {
+				$createBox.data('type','renameProject');
+				$projectName.text('项目名称');
+			} else {
+				$createBox.data('type','renameFolder');
+				$projectName.text('文件夹名称');
+			}
+
+			$createBox.show();
+			
+		} else if(_role == 'export') {
+
 		}
 
 });

@@ -47,11 +47,11 @@
                     </div>
                     <div class="content-menu" id="content-menu">
                         <ul>
-                            <li class="menu-item folder-item" data-role="rename">重命名(待做)</li>
+                            <li class="menu-item folder-item" data-role="rename">重命名</li>
                             <!-- <li class="menu-item" data-role="editor">编辑</li> -->
                             <li class="menu-item folder-item" data-role="add">添加文件夹</li>
                             <!-- <li class="menu-item" data-role="copy">复制(待做)</li> -->
-                            <li class="menu-item parent-folder-item" data-role="export">导出</li>
+                            <!-- <li class="menu-item parent-folder-item" data-role="export">导出</li> -->
                             <li class="menu-item" data-role="delete">删除</li>
                         </ul>
                     </div>
@@ -61,7 +61,7 @@
         <!-- 右侧内容 -->
         <section class="operate-contain pd-t-10 l" id="operate-contain">
             <!-- tab和tab名 -->
-            <div class="tabs full-width clearfix border-b-1">
+            <div class="tabs full-width clearfix">
                 <div class="l tabs-ul-box">
                    <ul class="l tabs-ul" id="tabs-ul">
                         <li class="l tab text-ellipsis pd-l-10 mg-l-10 pointer active">
@@ -306,7 +306,7 @@
             </div>
             <div class="clearfix full-width">
                 <span class="color-red l" id="create-warning"></span>
-                <div class="btns r btn-confirm">创建</div>
+                <div class="btns r btn-confirm">确定</div>
                 <div class="btns r mg-r-10 btn-cancle">取消</div>
             </div>
         </div>
@@ -331,6 +331,7 @@
         //本地存储
         require('./js/index/storage.js')
         let apiStorage = new ApiStorage();
+        
     
         require('./js/index/index.js')
     </script>
