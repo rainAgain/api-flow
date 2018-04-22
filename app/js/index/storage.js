@@ -501,9 +501,12 @@
 
 		//删除
 		
-		
 		this._tab.splice(pIndex,1);
-		this._tab[len-2].active = true;
+		
+		if(len >1) {
+			this._tab[len-2].active = true;				
+		}
+
 		this.syncTabStorage('save');	
 	};
 

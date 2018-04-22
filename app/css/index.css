@@ -234,7 +234,7 @@ html,body {
 
 .folder-content {
 	position: absolute;
-	top: 134px;
+	top: 100px;
 	bottom: 0;
 	left: 0;
 	width: 100%;
@@ -742,6 +742,10 @@ html,body {
 .tab:hover .tab-close:hover {
 	cursor: pointer;
 	color:#ee5e44;
+}
+
+.tab-close.remove {
+	display: none !important;
 }
 
 .key-item {

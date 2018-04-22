@@ -217,7 +217,7 @@ const renderResponseHeaders = (response) => {
 };
 
 const renderRequestHeaders = (data) => {
-    console.log(data);
+    // console.log(data);
     if(!data.length) {
         data.push({
             key:'',
@@ -235,7 +235,7 @@ const renderRequestHeaders = (data) => {
 };
 
 const renderRequestFormData = (data) => {
-    console.log(data);
+    // console.log(data);
     if(!data.length) {
         data.push({
             key:'',
@@ -253,7 +253,7 @@ const renderRequestFormData = (data) => {
 };
 
 const renderRequestXUrlEncode = (data) => {
-    console.log(data);
+    // console.log(data);
     if(!data.length) {
         data.push({
             key:'',
@@ -303,7 +303,7 @@ const renderTab = () => {
     // const boxW =  $operateContain.width();
 
     const tabData = apiStorage.readTabAll();
-    console.log(tabData);
+    // console.log(tabData);
     if(bodyEditor) {
 
         bodyEditor.setValue('{}');
@@ -341,7 +341,7 @@ const adjustTab = function(type) {
     // $tabsUl.css('left', - (_$tab.index()+1)*160 + (parseInt($operateContain.width()) - 50) +'px')
     // console.log(_$tab.index());
     const leftDistance = 160 * (_$tab.index()+1);//总移动的距离
-    console.log(leftDistance);
+    // console.log(leftDistance);
     const tabBoxWidth = $tabUlBox.width();//可视区域的宽度
 
     let moveDistabce = leftDistance - tabBoxWidth;//最后移动的距离
@@ -352,10 +352,6 @@ const adjustTab = function(type) {
     }
     // $tabsUl.animate({'left': moveDistabce+'px'});
     //改为nicescroll的移动
-    console.log('111')
-    console.log(moveDistabce);
-    
-    console.log($('.tabs-ul-box').getNiceScroll(0));
 
     if(type == 'add-api') {
         
@@ -450,8 +446,8 @@ const initRightEvent = () => {
             index = $this.index();
 
         //var site = this.site;
-        console.log("site");
-        console.log(site);
+        // console.log("site");
+        // console.log(site);
         $('[site="'+site+'"]').addClass('active').siblings().removeClass('active');
 
         // $this.addClass('active').siblings().removeClass('active');
@@ -488,20 +484,28 @@ const initRightEvent = () => {
                 }
             }
         };
-
+        $tabsUl.find('.tab-close').removeClass('remove');
         renderRightArea(resData);
         adjustTab('add-api');
         
      }).on('click', '.tab-close', function() {
         const $this = $(this);
 
+        
         const site = $this.parent().attr('site');
-
+        
         const prevSite = $this.parent().prev().attr('site');
 
         apiStorage.removeTab(site);
 
         renderRightArea(prevSite,'menu');
+        
+        console.log($tabsUl.find('.tab'));
+
+        if($tabsUl.find('.tab').length == 1) {
+            $tabsUl.find('.tab-close').addClass('remove');
+        }
+        
 
      });
 
@@ -581,7 +585,7 @@ const initRightEvent = () => {
         var _val = $(this).data('value'),
             _text = $(this).text();
 
-        console.log(_val);
+        // console.log(_val);
         $authSelectResult.data('value', _val).text(_text);
         $authSelectList.slideToggle();
     });
@@ -624,17 +628,14 @@ const initRightEvent = () => {
             _iconType = $this.data('type');
 
         if(_iconType == 'clear') {
-            console.log('clear')
             editor.markClean();
             editor.setValue('');
         } else if( _iconType == 'copy') {
-            console.log('copy')
             const word = editor.getValue();
             clipboard.writeText(word);
             
 
         } else if( _iconType == 'exchange') {
-            console.log('exchange');
 
         }
     });
@@ -741,7 +742,7 @@ const initRightEvent = () => {
                 response: [],
                 site: folderSite
             },function(newSite) {
-                console.log(newSite);
+                // console.log(newSite);
                 if(!hasExit) {
                     $('.tab.active', $tabs).attr('site', newSite);
                 }
@@ -761,8 +762,6 @@ const initRightEvent = () => {
         const $this = $(this),
             type = $this.data('type'),
             index = $this.index();
-        
-        console.log(index);
 
         $this.addClass('active').siblings().removeClass('active');
         $('.res-item',  $bodyContain).eq(index).addClass('active').siblings().removeClass('active');
@@ -843,7 +842,7 @@ const sendRequest = () => {
 
     const headers = getRequestHeaders('object');
 
-    console.log(headers);
+    // console.log(headers);
 
     /*let urlStr = url;
 
@@ -890,10 +889,10 @@ const requestApi = {
             const timeResponse = new Date().getTime(),
                 timeSolt = timeResponse - timeBeforeSend;
 
-            console.log(response);
+            // console.log(response);
 
             $resTime.text(timeSolt +'ms');
-            console.log(error);
+            // console.log(error);
 
             if(response) {
                 $('.body-type-body').trigger('click');
@@ -909,7 +908,7 @@ const requestApi = {
 
                 if (!error) {
                     console.log('-------------------body---------------------');
-                    console.log(body);
+                    // console.log(body);
                     
                     editor.markClean();
                     editor.setValue(body);
@@ -940,11 +939,11 @@ const requestApi = {
             option.headers = headers
         };
         
-        console.log(option);
+        // console.log(option);
 
         if (_type == 'application-json') {
             option.json = true;
-            console.log(typeof bodyEditor.getValue())
+            // console.log(typeof bodyEditor.getValue())
             option.body = (bodyEditor && bodyEditor.getValue()) ? JSON.parse(bodyEditor.getValue()): {};
 
         } else
@@ -952,7 +951,7 @@ const requestApi = {
 
             const formData = getRequestBodyFormData('object');
             
-            console.log(formData);
+            // console.log(formData);
 
         } else 
         if (_type =='x-www-form-urlencoded') {
@@ -968,7 +967,7 @@ const requestApi = {
         request.post(option, function(error, response, body) {
             console.log('POST 请求');
             console.log('-------------------response---------------------');
-            console.log(response);
+            // console.log(response);
             
             const timeResponse = new Date().getTime(),
                 timeSolt = timeResponse - timeBeforeSend;
